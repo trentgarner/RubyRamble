@@ -1,11 +1,11 @@
 class BlogPostsController < ApplicationController
+  before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
 
   def index
     @blog_posts = BlogPost.all
   end
 
   def show
-    @blog_post = BlogPost.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, alert: "Blog post not found."
   end
@@ -26,13 +26,9 @@ class BlogPostsController < ApplicationController
   end
 
   def edit
-    @blog_post = BlogPost.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: "Blog post not found."
   end
 
   def update
-    @blog_post = BlogPost.find(params[:id])
     if @blog_post.update(blog_post_params)
       flash[:notice] = "Blog post was successfully updated."
       redirect_to @blog_post
@@ -42,9 +38,22 @@ class BlogPostsController < ApplicationController
     end
   end
 
+  def destroy
+    @blog_post.destroy
+    flash[:notice] = "Blog post was successfully deleted."
+    redirect_to blog_posts_path
+  end
+
   private
 
   def blog_post_params
     params.require(:blog_post).permit(:title, :body)
   end
+
+  def set_blog_post
+    @blog_post = BlogPost.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Blog post not found."
+  end
+
 end

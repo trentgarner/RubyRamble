@@ -12,7 +12,6 @@
 <% end %>
 
 <%= form_with model: @blog_post, url: blog_post_path(@blog_post), method: :patch do |form| %>
-
   <div>
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -24,7 +23,10 @@
   </div>
 
   <div>
-    <%= form.submit "Update Post" %>
+    <%= form.submit "Update Post", class: "btn btn-primary" %>
   </div>
-
 <% end %>
+
+<%= button_to 'Delete Post', blog_post_path(@blog_post), method: :delete, 
+          data: { turbo_confirm: "Are you sure you want to delete this post?" }, 
+          class: "btn btn-danger" %>
