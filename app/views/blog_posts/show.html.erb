@@ -3,3 +3,9 @@
 <div>
   <h2> <%= @blog_post.body %> </h2>
 </div>
+
+<%= link_to "Edit", edit_blog_post_path(@blog_post) %>
+
+<div>
+  <%= link_to "Home", root_path %>
+</div>
