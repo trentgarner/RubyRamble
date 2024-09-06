@@ -1,0 +1,30 @@
+<h1>Edit Post</h1>
+
+<% if @blog_post.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@blog_post.errors.count, "error") %> prevented this post from being saved:</h2>
+    <ul>
+      <% @blog_post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @blog_post, url: blog_post_path(@blog_post), method: :patch do |form| %>
+
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.submit "Update Post" %>
+  </div>
+
+<% end %>
